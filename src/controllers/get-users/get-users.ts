@@ -5,7 +5,7 @@ export class GetUsersController implements IGetUsersController{
 
    async handle() {
     try{
-        const users = await this.getUserRepository.getUser()
+        const users = await this.getUserRepository.getUsers()
 
         return{
             statusCode: 200,
