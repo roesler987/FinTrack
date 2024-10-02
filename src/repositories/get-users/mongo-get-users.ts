@@ -1,10 +1,10 @@
 import { IGetUsersRepository } from "../../controllers/get-users/procols";
 import { User } from "../../models/user";
-import { MongoCliente } from "../../database/mongo";
+import { MongoClient } from "../../database/mongo";
 
 export class MongoGetUsersRepository implements IGetUsersRepository {
   async getUsers(): Promise<User[]> {
-    const users = await MongoCliente.db
+    const users = await MongoClient.db
       .collection<Omit<User, "id">>("users")
       .find({})
       .toArray();

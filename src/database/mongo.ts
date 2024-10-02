@@ -1,6 +1,6 @@
 import {MongoClient as Mongo,Db } from 'mongodb'
 
-export const MongoCliente ={
+export const MongoClient ={
     cliente: undefined as unknown as Mongo,
     db: undefined as unknown as Db,
 
