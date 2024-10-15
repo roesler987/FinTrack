@@ -22,7 +22,7 @@ export class MongoUpdateUserRepository implements IUpdateUserRepository {
     .findOne({ _id: new ObjectId(id) });
 
     if(!user){
-        throw new Error("User not update");
+        throw new Error("User not updated");
     }
 
     const { _id, ...rest } = user;

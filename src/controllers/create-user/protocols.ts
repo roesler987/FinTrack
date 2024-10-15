@@ -5,6 +5,7 @@ export interface CreateUserParams {
   lastName: string;
   email: string;
   password: string;
+  initialIncome: number;
 }
 
 export interface ICreateUseRepository {

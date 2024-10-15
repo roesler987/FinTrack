@@ -1,4 +1,4 @@
-import { IGetUsersRepository } from "../../controllers/get-users/procols";
+import { IGetUsersRepository } from "../../controllers/get-users/protocols";
 import { User } from "../../models/user";
 import { MongoClient } from "../../database/mongo";
 
@@ -10,7 +10,7 @@ export class MongoGetUsersRepository implements IGetUsersRepository {
       .toArray();
 
     return users.map(({ _id, ...rest }) => ({
-      ...rest, 
+      ...rest,
       id: _id.toHexString(),
     }));
   }
