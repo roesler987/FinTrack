@@ -9,6 +9,8 @@ import { UpdateUserController } from "./controllers/update-user/update-user";
 import { MongoUpdateUserRepository } from "./repositories/update-user/mongo-update-user";
 import { MongoDeleteUserRepository } from "./repositories/delete-user/mongo-delete-user";
 import { DeleteUserController } from "./controllers/delete-user/delete-user";
+import { MongoGetCategoriesRepository } from "./repositories/get-category/mongo-get-category";
+import { GetCategoriesController } from "./controllers/get-category/get-categorias";
 
 const main = async () => {
   config();
@@ -68,6 +70,17 @@ const main = async () => {
       body: req.body,
       params: req.params,
     });
+    res.status(statusCode).send(body);
+  });
+
+  app.get("/categories", async (req, res) => {
+    const mongoGetCategoriesRepository = new MongoGetCategoriesRepository();
+    const getCategoriesController = new GetCategoriesController(
+      mongoGetCategoriesRepository
+    );
+
+    const { body, statusCode } = await getCategoriesController.handle();
+
     res.status(statusCode).send(body);
   });
 
