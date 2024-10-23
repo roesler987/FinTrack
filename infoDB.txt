@@ -1,0 +1,29 @@
+Transações
+id_transacao (INT, Primary Key, Auto Increment)
+id_usuario (INT, Foreign Key -> Usuários)
+tipo (ENUM('entrada', 'saida'))
+valor (DECIMAL)
+descricao (VARCHAR)
+data (DATETIME)
+saldo_anterior_transacao (DECIMAL)
+saldo_apos_transacao (DECIMAL)
+id_categoria (INT, Foreign Key -> Categorias) Categoria da transação
+
+Categorias
+id_categoria (INT, Primary Key, Auto Increment)
+nome (VARCHAR)
+descricao (VARCHAR, Nullable) (Campo opcional)
+
+Histórico
+id_historico (INT, Primary Key, Auto Increment)
+id_usuario (INT, Foreign Key -> Usuários)
+id_transacao (INT, Foreign Key -> Transações)
+data (DATETIME)
+saldo_anterior (DECIMAL) 
+saldo_novo (DECIMAL)
+
+sequencia
+
+Categorias
+Transações
+Histórico
