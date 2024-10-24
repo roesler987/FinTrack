@@ -24,6 +24,5 @@ saldo_novo (DECIMAL)
 
 sequencia
 
-Categorias
 Transações
 Histórico
