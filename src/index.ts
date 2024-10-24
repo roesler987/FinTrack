@@ -11,6 +11,12 @@ import { MongoDeleteUserRepository } from "./repositories/delete-user/mongo-dele
 import { DeleteUserController } from "./controllers/delete-user/delete-user";
 import { MongoGetCategoriesRepository } from "./repositories/get-category/mongo-get-category";
 import { GetCategoriesController } from "./controllers/get-category/get-categorias";
+import { MongoDeleteCategoryRepository } from "./repositories/delete-category/mongo-delete-category";
+import { DeleteCategoryController } from "./controllers/delete-category/delete-category";
+import { MongoCreateCategoryRepository } from "./repositories/create-category/mongo-create-category"; // Import Create Category Repository
+import { CreateCategoryController } from "./controllers/create-category/create-category"; // Import Create Category Controller
+import { UpdateCategoryController } from "./controllers/update-category/update-category"; // Import Update Category Controller
+import { MongoUpdateCategoryRepository } from "./repositories/update-category/mongo-update-category"; // Import Update Category Repository
 
 const main = async () => {
   config();
@@ -80,6 +86,47 @@ const main = async () => {
     );
 
     const { body, statusCode } = await getCategoriesController.handle();
+
+    res.status(statusCode).send(body);
+  });
+
+  app.post("/categories", async (req, res) => {
+    const mongoCreateCategoryRepository = new MongoCreateCategoryRepository();
+    const createCategoryController = new CreateCategoryController(
+      mongoCreateCategoryRepository
+    );
+
+    const { body, statusCode } = await createCategoryController.handle({
+      body: req.body,
+    });
+
+    res.status(statusCode).send(body);
+  });
+
+  app.patch("/categories/:id", async (req, res) => {
+    const mongoUpdateCategoryRepository = new MongoUpdateCategoryRepository();
+    const updateCategoryController = new UpdateCategoryController(
+      mongoUpdateCategoryRepository
+    );
+
+    const { body, statusCode } = await updateCategoryController.handle({
+      body: req.body,
+      params: req.params,
+    });
+
+    res.status(statusCode).send(body);
+  });
+
+  app.delete("/categories/:id", async (req, res) => {
+    const mongoDeleteCategoryRepository = new MongoDeleteCategoryRepository();
+    const deleteCategoryController = new DeleteCategoryController(
+      mongoDeleteCategoryRepository
+    );
+
+    const { body, statusCode } = await deleteCategoryController.handle({
+      body: req.body,
+      params: req.params,
+    });
 
     res.status(statusCode).send(body);
   });
