@@ -13,10 +13,18 @@ import { MongoGetCategoriesRepository } from "./repositories/get-category/mongo-
 import { GetCategoriesController } from "./controllers/get-category/get-categorias";
 import { MongoDeleteCategoryRepository } from "./repositories/delete-category/mongo-delete-category";
 import { DeleteCategoryController } from "./controllers/delete-category/delete-category";
-import { MongoCreateCategoryRepository } from "./repositories/create-category/mongo-create-category"; // Import Create Category Repository
-import { CreateCategoryController } from "./controllers/create-category/create-category"; // Import Create Category Controller
-import { UpdateCategoryController } from "./controllers/update-category/update-category"; // Import Update Category Controller
-import { MongoUpdateCategoryRepository } from "./repositories/update-category/mongo-update-category"; // Import Update Category Repository
+import { MongoCreateCategoryRepository } from "./repositories/create-category/mongo-create-category";
+import { CreateCategoryController } from "./controllers/create-category/create-category";
+import { UpdateCategoryController } from "./controllers/update-category/update-category";
+import { MongoUpdateCategoryRepository } from "./repositories/update-category/mongo-update-category";
+import { MongoCreateTransactionRepository } from "./repositories/create-transaction/mongo-create-transaction";
+import { CreateTransactionController } from "./controllers/create-transaction/create-transaction";
+import { MongoGetTransactionsRepository } from "./repositories/get-transaction/mongo-get-transaction";
+import { GetTransactionsController } from "./controllers/get-transaction/get-transaction";
+import { MongoUpdateTransactionRepository } from "./repositories/update-transaction/mongo-update-transaction";
+import { UpdateTransactionController } from "./controllers/update-transaction/update-transaction";
+import { MongoDeleteTransactionRepository } from "./repositories/delete-transaction/mongo-delete-transaction";
+import { DeleteTransactionController } from "./controllers/delete-transaction/delete-transaction";
 
 const main = async () => {
   config();
@@ -73,7 +81,7 @@ const main = async () => {
     );
 
     const { body, statusCode } = await deleteUserController.handle({
-      body: req.body,
+      body: {},
       params: req.params,
     });
     res.status(statusCode).send(body);
@@ -124,7 +132,61 @@ const main = async () => {
     );
 
     const { body, statusCode } = await deleteCategoryController.handle({
+      body: {},
+      params: req.params,
+    });
+
+    res.status(statusCode).send(body);
+  });
+
+  app.get("/transactions", async (req, res) => {
+    const mongoGetTransactionsRepository = new MongoGetTransactionsRepository();
+    const getTransactionsController = new GetTransactionsController(
+      mongoGetTransactionsRepository
+    );
+
+    const { body, statusCode } = await getTransactionsController.handle();
+
+    res.status(statusCode).send(body);
+  });
+
+  app.post("/transactions", async (req, res) => {
+    const mongoCreateTransactionRepository =
+      new MongoCreateTransactionRepository();
+    const createTransactionController = new CreateTransactionController(
+      mongoCreateTransactionRepository
+    );
+
+    const { body, statusCode } = await createTransactionController.handle({
       body: req.body,
+    });
+
+    res.status(statusCode).send(body);
+  });
+
+  app.patch("/transactions/:id", async (req, res) => {
+    const mongoUpdateTransactionRepository =
+      new MongoUpdateTransactionRepository();
+    const updateTransactionController = new UpdateTransactionController(
+      mongoUpdateTransactionRepository
+    );
+
+    const { body, statusCode } = await updateTransactionController.handle({
+      body: req.body,
+      params: req.params,
+    });
+
+    res.status(statusCode).send(body);
+  });
+
+  app.delete("/transactions/:id", async (req, res) => {
+    const mongoDeleteTransactionRepository =new MongoDeleteTransactionRepository();
+    const deleteTransactionController = new DeleteTransactionController(
+      mongoDeleteTransactionRepository
+    );
+
+    const { body, statusCode } = await deleteTransactionController.handle({
+      body: {},
       params: req.params,
     });
 
